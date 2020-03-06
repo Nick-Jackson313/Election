@@ -3,32 +3,58 @@
 #include <vector>
 #include "district.h"
 
-District::District(int id){
-
-  id_ = id;
-  area_ = (rand() %25) + 9;
-
-//This seems redundent but as far as I am concerned it gets the job done.
-  Party_Constituents Democrat;
-  Democrat.affiliation = Party::Democrat;
-  Democrat.num_of_constituents = (rand() %10);
-  total_constituents_ += Democrat.num_of_constituents;
-  parties_demographic_.push_back(Democrat);
-
-  Party_Constituents Repbulican;
-  Repbulican.affiliation = Party::Repbulican;
-  Repbulican.num_of_constituents = (rand() %10);
-  total_constituents_ += Repbulican.num_of_constituents;
-  parties_demographic_.push_back(Repbulican);
-
-
-  Party_Constituents None;
-  None.affiliation = Party::None;
-  None.num_of_constituents = (rand() %10);
-  total_constituents_ += None.num_of_constituents;
-  parties_demographic_.push_back(None);
-
-  //constituents_ = constituents_
-
-
+int IntegerifyParty(Party p){
+  int id = static_cast<int>(p);
+  return id;
 }
+
+std::string StringifyParty(Party p){
+  std::string parties[] = {"Democrat", "Republican", "None"};
+  std::string party = parties[IntegerifyParty(p)];
+  return party;
+}
+
+Party PartyfyInterger(int i){
+  Party type = static_cast<Party>(i);
+  return type;
+}
+
+int District::unique_id_ = 1;
+District::District(){
+  std::cout<<"unique_id_ in entering District: "<< District::get_unique_id()<<std::endl;
+  id_ = unique_id_;
+  unique_id_++;
+
+  area_ = (rand() %25) + 9;
+  int i = 0;
+
+  while(PartyfyInterger(i) != Party::Last){
+    int constituent_count =  (rand() %10);
+    parties_demographic_[PartyfyInterger(i)] +=  constituent_count;
+    total_constituents_ += constituent_count;
+    if(i == 0){
+      majority_party_ = PartyfyInterger(i);
+
+    }
+    else{
+      if(parties_demographic_ [majority_party_] < parties_demographic_ [PartyfyInterger(i)]){
+          majority_party_ = PartyfyInterger(i);
+      }
+    }
+    i++;
+
+  }
+
+
+  std::cout<<"unique_id_ in District after constructor is run: "<< District::get_unique_id()<<std::endl;
+}
+void District::IncrementConstituents(Party p){
+
+  parties_demographic_[p] += 1;
+
+};
+void District::DecrementConstituents(Party p){
+  if(parties_demographic_[p] > 0){
+    parties_demographic_[p] -= 1;
+  }
+};
