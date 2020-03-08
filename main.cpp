@@ -9,38 +9,18 @@
 
 int main(){
 
+  Candidate *trump = new Candidate;
+
+  trump->name = "trump";
+  trump->id = 1;
+  trump->affiliation = Party::Republican;
   srand(time(NULL));
   ElectoralMap &em = ElectoralMap::GetInstance();
+  //std::cout<<em;
+  em.calculateRepVote(em.get_district(1));
+  em.Campaign(trump, em.get_district(1));
 
-
-
-  Candidate *Trump = new Candidate;
-  Trump->name = "Trump";
-  Trump->id = 1;
-  Trump->affiliation = Party::Republican;
-
-  Candidate *Sanders = new Candidate;
-  Sanders->name = "Sanders";
-  Sanders->id = 2;
-  Sanders->affiliation = Party::Democrat;
-  em.Campaign(Trump, em.get_district(1));
-
-
-
-  // for(auto itr: test_run.get_district_map()){
-  //
-  //   std::cout<< StringifyParty(itr.first)<<":" << itr.second<<std::endl;
-  //
-  // }
-  // for(auto itr: test_run1.get_district_map()){
-  //
-  //   std::cout<< StringifyParty(itr.first)<<":" << itr.second<<std::endl;
-  //
-  // }
-  //std::cout<<test_run.get_id()<<std::endl;
-  // std::cout<<test_run1.get_id()<<std::endl;
-  // std::cout<<test_run2.get_id()<<std::endl;
-
+  //std::cout<<em.get_total_constituents()<<std::endl;
 
 
 

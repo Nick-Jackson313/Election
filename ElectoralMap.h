@@ -19,21 +19,26 @@ public:
 
 		return instance;
 	}
-
-   std::map< int, District*>get_district_map() { return electoralmap_map_;};
-   District* get_district(int id){return  electoralmap_map_[id];};
-
-
-	// Delete the methods we don't want
+  // Delete the methods we don't want
 	ElectoralMap(ElectoralMap const&) = delete; // copy constructor
 	void operator=(ElectoralMap const&) = delete; // assignment operator
   static const int NUM_DISTRICT;
-	void Campaign(Candidate *c, District *d);
 
+
+   std::map< int, District*>get_district_map() { return electoralmap_map_;};
+   District* get_district(int id){return  electoralmap_map_[id];};
+   int get_total_constituents(){return total_constituents_;};
+   int get_total_distrcts(){return total_districts_;};
+
+   void Campaign(Candidate *c, District *d);
+   int calculateRepVote(District *d);
+   friend std::ostream& operator<<(std::ostream& os, const ElectoralMap &em);
 
  private:
  	ElectoralMap();  // private constructor
   std::map< int, District*> electoralmap_map_;
+  int total_districts_;
+  int total_constituents_;
 
 
 

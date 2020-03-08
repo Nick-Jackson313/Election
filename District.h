@@ -3,7 +3,7 @@
 
 #include <map>
 //Do I need to iterate through this??
-enum class Party {Democrat, Republican, None, Last};
+enum class Party {Democrat, Republican, Independent,Green, None, Last};
 
 
 int IntegerifyParty(Party p);
@@ -19,9 +19,12 @@ public:
   int get_total_constituents() { return total_constituents_; };
   static int get_unique_id(){return unique_id_;};
   Party get_majority_party_(){return majority_party_;};
+  Party get_second_majority(){return second_majority_;};
   void IncrementConstituents(Party p);
   void DecrementConstituents(Party p);
   std::map<Party, int> get_district_map(){return district_map_;};
+  void UpdateMajorities();
+  friend std::ostream& operator<<(std::ostream& os, const District &d);
   // void
 
 
