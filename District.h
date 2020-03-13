@@ -3,7 +3,7 @@
 
 #include <map>
 //Do I need to iterate through this??
-enum class Party {Democrat, Republican, Independent,Green, None, Last};
+enum class Party {Democrat, Republican,None, Last};
 
 
 int IntegerifyParty(Party p);

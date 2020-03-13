@@ -9,7 +9,7 @@ int IntegerifyParty(Party p){
 }
 
 std::string StringifyParty(Party p){
-  std::string parties[] = {"Democrat","Republican","Independent","Green","None","Last"};
+  std::string parties[] = {"Democrat","Republican","None","Last"};
   std::string party = parties[IntegerifyParty(p)];
   return party;
 }
@@ -24,7 +24,7 @@ District::District(){
 
   id_ = unique_id_;
   unique_id_++;
-  area_ = rand() % 16 + 9;
+  area_ = rand() % 17 + 9;
 
   //All three varibles used in checks on majorties
   bool not_used = true;
@@ -48,30 +48,31 @@ District::District(){
         majority_party_number = district_map_[majority_party_];
         second_majority_party_number =  district_map_[second_majority_];
 
-      }
 
+      }
       else{
         second_majority_ = PartyfyInterger(i);
         majority_party_ = PartyfyInterger(i -1);
         majority_party_number = district_map_[majority_party_];
         second_majority_party_number =  district_map_[second_majority_];
+
       }
     }
     // This is the rest of the checking as I load more voters into thier party. I use the bool to make sure I never repeate load a value to majortiy and second majority.
-    if( majority_party_number < district_map_[PartyfyInterger(i)] && PartyfyInterger(i) != Party::None){
-      majority_party_ = PartyfyInterger(i);
-      majority_party_number = district_map_[PartyfyInterger(i)];
-      not_used = false;
-    }
-    else if( second_majority_party_number < district_map_[PartyfyInterger(i)] && not_used && PartyfyInterger(i) != Party::None){
-
-        second_majority_ = PartyfyInterger(i);
-        second_majority_party_number = district_map_[second_majority_];
-    }
-    else if(second_majority_party_number< district_map_[PartyfyInterger(0)] && majority_party_ != PartyfyInterger(0)){
-      second_majority_ = PartyfyInterger(0);
-      second_majority_party_number = district_map_[ second_majority_];
-    }
+    // if( majority_party_number < district_map_[PartyfyInterger(i)] && PartyfyInterger(i) != Party::None){
+    //   majority_party_ = PartyfyInterger(i);
+    //   majority_party_number = district_map_[PartyfyInterger(i)];
+    //   not_used = false;
+    // }
+    // if( second_majority_party_number < district_map_[PartyfyInterger(i)] && not_used && PartyfyInterger(i) != Party::None){
+    //
+    //     second_majority_ = PartyfyInterger(i);
+    //     second_majority_party_number = district_map_[second_majority_];
+    // }
+    // if(second_majority_party_number< district_map_[PartyfyInterger(0)] && majority_party_ != PartyfyInterger(0)){
+    //   second_majority_ = PartyfyInterger(0);
+    //   second_majority_party_number = district_map_[ second_majority_];
+    // }
 
     not_used = true;
     i++;
@@ -117,7 +118,7 @@ void District::UpdateMajorities(){
   }
 };
 std::ostream& operator<<(std::ostream& os, const District &d){
-  os<< "District " << d.get_id()<<":"<<std::endl;
+  os<< " District " << d.id_<<":"<<std::endl;
   os<<" Square miles: " <<d.area_<<std::endl;
   for(auto itr: d.district_map_){
 
