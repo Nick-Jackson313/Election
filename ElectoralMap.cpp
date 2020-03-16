@@ -4,6 +4,7 @@
 #include <algorithm>
 #include "district.h"
 #include "electoralmap.h"
+#include <math.h>
 
 
 const int ElectoralMap::NUM_DISTRICT = 3;

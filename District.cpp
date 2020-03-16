@@ -58,21 +58,21 @@ District::District(){
 
       }
     }
-    // This is the rest of the checking as I load more voters into thier party. I use the bool to make sure I never repeate load a value to majortiy and second majority.
-    // if( majority_party_number < district_map_[PartyfyInterger(i)] && PartyfyInterger(i) != Party::None){
-    //   majority_party_ = PartyfyInterger(i);
-    //   majority_party_number = district_map_[PartyfyInterger(i)];
-    //   not_used = false;
-    // }
-    // if( second_majority_party_number < district_map_[PartyfyInterger(i)] && not_used && PartyfyInterger(i) != Party::None){
-    //
-    //     second_majority_ = PartyfyInterger(i);
-    //     second_majority_party_number = district_map_[second_majority_];
-    // }
-    // if(second_majority_party_number< district_map_[PartyfyInterger(0)] && majority_party_ != PartyfyInterger(0)){
-    //   second_majority_ = PartyfyInterger(0);
-    //   second_majority_party_number = district_map_[ second_majority_];
-    // }
+    //This is the rest of the checking as I load more voters into thier party. I use the bool to make sure I never repeate load a value to majortiy and second majority.
+    if( majority_party_number < district_map_[PartyfyInterger(i)] && PartyfyInterger(i) != Party::None){
+      majority_party_ = PartyfyInterger(i);
+      majority_party_number = district_map_[PartyfyInterger(i)];
+      not_used = false;
+    }
+    if( second_majority_party_number < district_map_[PartyfyInterger(i)] && not_used && PartyfyInterger(i) != Party::None){
+
+        second_majority_ = PartyfyInterger(i);
+        second_majority_party_number = district_map_[second_majority_];
+    }
+    if(second_majority_party_number< district_map_[PartyfyInterger(0)] && majority_party_ != PartyfyInterger(0)){
+      second_majority_ = PartyfyInterger(0);
+      second_majority_party_number = district_map_[ second_majority_];
+    }
 
     not_used = true;
     i++;

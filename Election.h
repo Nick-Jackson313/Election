@@ -14,11 +14,10 @@ public:
   void Campaign(Candidate *c, District *d);
   std::vector<Candidate*> get_candadiates(){return Candidates_;};
   std::vector<std::vector<Candidate*>>storeCandidates();
-  virtual std::map<Candidate*, int> countVotes(std::vector<std::vector<Candidate*>>, District *d);
+  virtual std::map<int, int> countVotes(std::vector<std::vector<Candidate*>>, District *d);
 
 
   std::map<Candidate*, int> countVotes();
-
 
 
 protected:
@@ -29,6 +28,8 @@ protected:
 class RepresentativeElection : public Election{
 public:
   RepresentativeElection();
+  //std::map<int, int> countVotes(std::vector<std::vector<Candidate*>>, District *d);
+
   // std::map<Candidate*, int> countVotes(std::vector<std::vector<Candidate*>>);
 };
 

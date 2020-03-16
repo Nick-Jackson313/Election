@@ -4,10 +4,10 @@ CXXFLAGS	= -std=c++17 -Wall
 all: election
 
 clean:
-	rm run Election.o ElectoralMap.o TextUI.o District.o Candidate.o
+	rm run Election.o ElectoralMap.o TextUI.o District.o
 
-election: main.cpp Election.o ElectoralMap.o TextUI.o District.o Candidate.o
-	$(CXX) $(CXXFLAGS) main.cpp Election.o Candidate.o TextUI.o District.o ElectoralMap.o -o run
+election: main.cpp Election.o ElectoralMap.o TextUI.o District.o
+	$(CXX) $(CXXFLAGS) main.cpp Election.o TextUI.o District.o ElectoralMap.o -o run
 
 TextUI.o: TextUI.cpp
 	$(CXX) $(CXXFLAGS) -c TextUI.cpp
@@ -20,6 +20,3 @@ ElectoralMap.o: ElectoralMap.cpp
 
 District.o: District.cpp
 		$(CXX) $(CXXFLAGS) -c District.cpp
-
-Candidate.o: Candidate.cpp
-		$(CXX) $(CXXFLAGS) -c Candidate.cpp

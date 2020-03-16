@@ -6,6 +6,7 @@
 #include <map>
 #include <iterator>
 #include <stdexcept>
+#include <set>
 
 TextUI::TextUI(Election *e){
   e_ = e;
@@ -69,6 +70,7 @@ void TextUI::registerCandidates(){
       answer = "";
       i++;
     }
+    //Makes sure that the candidates vector is not empty.
     if(e_->get_candadiates().empty()){
       std::cout<<"You need candidates to run the elecion! Try again."<<std::endl;
       i = 0;
@@ -136,38 +138,56 @@ void TextUI::electionResults(){
   ElectoralMap &em = ElectoralMap::GetInstance();
 
   std::vector<std::vector<Candidate*>> list_of_canidates = get_election()->storeCandidates();
-  std::map<Candidate*, int> e_r;
+
+  std::map<int, int> e_r;
+
   for(int i = 0; i < list_of_canidates.size(); i++){
     for(int j = 0; j < list_of_canidates[i].size(); j++ ){
-       e_r[list_of_canidates[i][j]] = 0;
+       e_r[list_of_canidates[i][j]->id] = 0;
 
     }
   }
 
   for(auto district_result : em.get_district_map()){
-    std::map<Candidate*, int> district_election_results;
+
+    std::map<int, int> district_election_results;
     district_election_results = get_election()->countVotes(list_of_canidates, district_result.second);
-    for(auto test : district_election_results){
-      std::cout<< "Look here this is where you think its breaking, should trigger 9 times..."<<std::endl;
-      Candidate tester = *test.first;
-      std::cout<<tester.name<< ": "<<test.second<<std::endl;
+    // for(auto test : district_election_results){
+    //   std::cout<< "Look here this is where you think its breaking, should trigger 9 times..."<<std::endl;
+    //   Candidate tester = *test.first;
+    //   std::cout<<tester.name<< ": "<<test.second<<std::endl;
+    // }std::cout<<" I will add votes to candidates for district: "<<district_result.second->get_id();
+
+    std::cout<<em;
+    std::cout<<" I will add votes to candidates for district: "<<district_result.second->get_id()<<std::endl;
+
+    for(int j = 1; j < get_election()->get_candadiates().size(); j++){
+
+         std::cout<<"The majority of this district should have vote of none and majority(RANDOMLY PICKED) and second party should have his constiuents: "<< district_election_results[j]<<std::endl;
+
+        // std::cout<<"This is hopefully a value besides 0: "<< district_election_results.second<<std::endl;
+        //for(std::pair<Candidate*, int> it : map)
+        std::cout<<"  e_r_results.second after I Think its failing: "<<   e_r[j]<<std::endl;
+
+
+
+
+         e_r.insert(std::pair<int,int>(j,district_election_results[j]));
+
+         std::cout<<"  e_r_results.second after I Think its failing: "<<  e_r[j]<<std::endl;
+
     }
-    for(auto e_r_results : e_r){
-         std::cout<<"This is hopefully a value besides 0: "<< district_election_results[e_r_results.first]<<std::endl;
-         std::cout<<"This is hopefully a value besides 0: "<< district_election_results.second<<std::endl;
-         e_r_results.second += district_election_results[e_r_results.first];
-       }
 
   }
-  for(auto results : e_r){
-    if(most_votes < results.second){
-      most_votes = results.second;
-      winner = *results.first;
+  for(std::pair<int,int> itr : e_r){
+    if(most_votes <= itr.second){
+      most_votes = itr.second;
+      winner = *get_election()->get_candadiates()[(itr.first -1)];
     }
   }
   std::cout<<"Full results: "<<std::endl;
-  for(auto results : e_r){
-    std::cout<<results.first->name<<": "<<results.second<<std::endl;
+  for(std::pair<int,int> itr : e_r){
+    std::cout<<get_election()->get_candadiates()[(itr.first -1)]->name<<": "<<itr.second<< std::endl;
   }
   std::cout<<""<<std::endl;
   std::cout<<"Congratulations, "<< winner.name <<", you've won!"<<std::endl;
